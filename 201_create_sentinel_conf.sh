@@ -27,7 +27,7 @@ for i in `seq 1 $NUM`; do
 	echo "sentinel down-after-milliseconds redis_$i 10000" >>$CONF_FILE
 	echo "sentinel parallel-syncs redis_$i 1" >>$CONF_FILE
 	echo "sentinel failover-timeout redis_$i 180000" >>$CONF_FILE
-	echo "sentinel client-reconfig-script redis_$i $FAILOVER_PL $FALOVER_PL_OPTS" >>$CONF_FILE
+	echo "sentinel client-reconfig-script redis_$i $FAILOVER_PL $FAILOVER_PL_OPTS" >>$CONF_FILE
 	echo "" >>$CONF_FILE
 done
 chown redis.redis $CONF_FILE
@@ -59,7 +59,7 @@ for i in `seq 1 $NUM`; do
 	echo "sentinel down-after-milliseconds redis_$i 10000" >>$CONF_FILE
 	echo "sentinel parallel-syncs redis_$i 1" >>$CONF_FILE
 	echo "sentinel failover-timeout redis_$i 180000" >>$CONF_FILE
-	echo "sentinel client-reconfig-script redis_$i $FAILOVER_PL $FALOVER_PL_OPTS" >>$CONF_FILE
+	echo "sentinel client-reconfig-script redis_$i $FAILOVER_PL $FAILOVER_PL_OPTS" >>$CONF_FILE
 	echo "" >>$CONF_FILE
 done
 chown redis.redis $CONF_FILE
