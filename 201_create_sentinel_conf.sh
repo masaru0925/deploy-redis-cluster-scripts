@@ -33,7 +33,7 @@ chown redis.redis $CONF_FILE
 
 
 # -----------------------------------------------------
-PORT2=26380
+PORT=26380
 LOG_DIR=/var/local/log/sentinel$PORT
 PID_FILE=/var/local/run/redis/sentinel$PORT.pid
 CONF_FILE=/etc/redis/sentinel$PORT.conf
