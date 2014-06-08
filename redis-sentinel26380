@@ -43,6 +43,7 @@ case "$1" in
                     sleep 1
                 done
                 echo "Redis sentinel stopped"
+				rm -rf $PIDFILE
         fi
         ;;
     *)
