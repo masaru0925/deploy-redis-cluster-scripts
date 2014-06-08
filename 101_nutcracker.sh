@@ -34,4 +34,4 @@ chown -R redis.redis $CONF_DEST_P_DIR
 cp ./nutcracker $INIT_DEST_DIR/.
 chkconfig --del nutcracker
 chkconfig --add nutcracker
-chkconfig nutcracker on
+#chkconfig nutcracker on

@@ -9,7 +9,8 @@
 . /etc/rc.d/init.d/functions
 
 USER="redis"
-OPTIONS="-d -c /etc/nutcracker/conf/nutcracker_rediscluster.yml"
+#OPTIONS="-d -c /etc/nutcracker/conf/nutcracker_rediscluster.yml"
+OPTIONS="-d -c /etc/nutcracker/nutcracker.yml"
 export PATH=$PATH:/usr/local/sbin
 
 if [ -f /etc/sysconfig/nutcracker ];then
