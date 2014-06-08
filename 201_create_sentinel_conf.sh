@@ -2,62 +2,65 @@
 
 FAILOVER_PL=/opt/ActivePerl-5.18/site/bin/failover.pl
 # -----------------------------------------------------
-PORT1=26379
-LOG_DIR1=/var/local/log/sentinel$PORT1 
-PID_FILE1=/var/local/run/redis/sentinel$PORT1.pid
-CONF_FILE1=/etc/redis/sentinel$PORT1.conf
+PORT=26379
+LOG_DIR=/var/local/log/sentinel$PORT
+PID_FILE=/var/local/run/redis/sentinel$PORT.pid
+CONF_FILE=/etc/redis/sentinel$PORT.conf
 
-mkdir -p $LOG_DIR1
-chown redis.redis $LOG_DIR1
+mkdir -p $LOG_DIR
+chown redis.redis $LOG_DIR
 
-rm -f $CONF_FILE1
-echo "port $PORT1" >$CONF_FILE1
-echo "daemonize yes" >>$CONF_FILE1
-echo "logfile \"$LOG_DIR1/sentinel.log\"" >>$CONF_FILE1
-echo "pidfile \"$PID_FILE1\"" >>$CONF_FILE1
+rm -f $CONF_FILE
+echo "port $PORT" >$CONF_FILE
+echo "daemonize yes" >>$CONF_FILE
+echo "logfile \"$LOG_DIR/sentinel.log\"" >>$CONF_FILE
+echo "pidfile \"$PID_FILE\"" >>$CONF_FILE
 
 for i in `seq 1 $NUM`; do
     REDIS_PORT=`echo $(($i+6379))`
 	if [ $IS_SLAVE ]; then
-		echo "sentinel monitor redis_$i $MASTER $REDIS_PORT 2" >>$CONF_FILE1
+		echo "sentinel monitor redis_$i $MASTER $REDIS_PORT 3" >>$CONF_FILE
 	else
-		echo "sentinel monitor redis_$i $HOST $REDIS_PORT 2" >>$CONF_FILE1
+		echo "sentinel monitor redis_$i $HOST $REDIS_PORT 3" >>$CONF_FILE
 	fi
-	echo "sentinel down-after-milliseconds redis_$i 10000" >>$CONF_FILE1
-	echo "sentinel parallel-syncs redis_$i 1" >>$CONF_FILE1
-	echo "sentinel failover-timeout redis_$i 180000" >>$CONF_FILE1
-	echo "sentinel client-reconfig-script redis_$i $FAILOVER_PL" >>$CONF_FILE1
-	echo "" >>$CONF_FILE1
+	echo "sentinel down-after-milliseconds redis_$i 10000" >>$CONF_FILE
+	echo "sentinel parallel-syncs redis_$i 1" >>$CONF_FILE
+	echo "sentinel failover-timeout redis_$i 180000" >>$CONF_FILE
+	echo "sentinel client-reconfig-script redis_$i $FAILOVER_PL" >>$CONF_FILE
+	echo "" >>$CONF_FILE
 done
-chown redis.redis $CONF_FILE1
+chown redis.redis $CONF_FILE
 
 
 # -----------------------------------------------------
 PORT2=26380
-LOG_DIR2=/var/local/log/sentinel$PORT2 
-PID_FILE2=/var/local/run/redis/sentinel$PORT2.pid
-CONF_FILE2=/etc/redis/sentinel$PORT2.conf
+LOG_DIR=/var/local/log/sentinel$PORT
+PID_FILE=/var/local/run/redis/sentinel$PORT.pid
+CONF_FILE=/etc/redis/sentinel$PORT.conf
 
-mkdir -p $LOG_DIR2
-chown redis.redis $LOG_DIR2
+mkdir -p $LOG_DIR
+chown redis.redis $LOG_DIR
 
-rm -f $CONF_FILE2
-echo "port $PORT2" >$CONF_FILE2
-echo "daemonize yes" >>$CONF_FILE2
-echo "logfile \"$LOG_DIR2/sentinel.log\"" >>$CONF_FILE2
-echo "pidfile \"$PID_FILE2\"" >>$CONF_FILE2
+rm -f $CONF_FILE
+echo "port $PORT" >$CONF_FILE
+echo "daemonize yes" >>$CONF_FILE
+echo "logfile \"$LOG_DIR/sentinel.log\"" >>$CONF_FILE
+echo "pidfile \"$PID_FILE\"" >>$CONF_FILE
 
 for i in `seq 1 $NUM`; do
     REDIS_PORT=`echo $(($i+6379))`
 	if [ $IS_SLAVE ]; then
-		echo "sentinel monitor redis_$i $MASTER $REDIS_PORT 3" >>$CONF_FILE2
+		echo "sentinel monitor redis_$i $MASTER $REDIS_PORT 3" >>$CONF_FILE
 	else
-		echo "sentinel monitor redis_$i $HOST $REDIS_PORT 3" >>$CONF_FILE2
+		echo "sentinel monitor redis_$i $HOST $REDIS_PORT 3" >>$CONF_FILE
 	fi
-	echo "sentinel down-after-milliseconds redis_$i 10000" >>$CONF_FILE2
-	echo "sentinel parallel-syncs redis_$i 1" >>$CONF_FILE2
-	echo "sentinel failover-timeout redis_$i 180000" >>$CONF_FILE2
-	echo "sentinel client-reconfig-script redis_$i $FAILOVER_PL" >>$CONF_FILE2
-	echo "" >>$CONF_FILE2
+	echo "sentinel down-after-milliseconds redis_$i 10000" >>$CONF_FILE
+	echo "sentinel parallel-syncs redis_$i 1" >>$CONF_FILE
+	echo "sentinel failover-timeout redis_$i 180000" >>$CONF_FILE
+	echo "sentinel client-reconfig-script redis_$i $FAILOVER_PL" >>$CONF_FILE
+	echo "" >>$CONF_FILE
 done
-chown redis.redis $CONF_FILE2
+chown redis.redis $CONF_FILE
+
+
+
