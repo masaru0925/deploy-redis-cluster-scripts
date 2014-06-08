@@ -2,7 +2,7 @@
 CONF_DEST_P_DIR=/etc/nutcracker
 CONF_DEST_DIR=$CONF_DEST_P_DIR/conf
 INIT_DEST_DIR=/etc/init.d
-CONF_FILE=./nutcracker_rediscluster.yml 
+CONF_FILE=/tmp/nutcracker_rediscluster.yml 
 rm -rf $CONF_DEST_DIR
 mkdir -p $CONF_DEST_DIR
 
@@ -19,7 +19,11 @@ echo "  servers:" >>$CONF_FILE
 
 for i in `seq 1 $NUM`; do
     REDIS_PORT=`echo $(($i+6379))`
-    echo "    - $HOST:$REDIS_PORT:1 redis_$i" >>$CONF_FILE
+	if [ $IS_SLAVE ]; then
+	    echo "    - $MASTER:$REDIS_PORT:1 redis_$i" >>$CONF_FILE
+	else
+		echo "    - $HOST:$REDIS_PORT:1 redis_$i" >>$CONF_FILE
+	fi
 done
 
 cp $CONF_FILE $CONF_DEST_DIR/.

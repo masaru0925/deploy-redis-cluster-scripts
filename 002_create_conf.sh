@@ -2,7 +2,7 @@
 
 CONF_DEST_DIR=/etc/redis/conf
 ORG_DIR=/usr/local/redis
-CONF_TMP_DIR=./conf
+CONF_TMP_DIR=/tmp/conf
 rm -rf $CONF_TMP_DIR
 mkdir $CONF_TMP_DIR
 rm -rf $CONF_DEST_DIR

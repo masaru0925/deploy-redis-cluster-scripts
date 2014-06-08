@@ -18,7 +18,11 @@ echo "pidfile \"$PID_FILE1\"" >>$CONF_FILE1
 
 for i in `seq 1 $NUM`; do
     REDIS_PORT=`echo $(($i+6379))`
-	echo "sentinel monitor redis_$i $HOST $REDIS_PORT 2" >>$CONF_FILE1
+	if [ $IS_SLAVE ]; then
+		echo "sentinel monitor redis_$i $MASTER $REDIS_PORT 2" >>$CONF_FILE1
+	else
+		echo "sentinel monitor redis_$i $HOST $REDIS_PORT 2" >>$CONF_FILE1
+	fi
 	echo "sentinel down-after-milliseconds redis_$i 10000" >>$CONF_FILE1
 	echo "sentinel parallel-syncs redis_$i 1" >>$CONF_FILE1
 	echo "sentinel failover-timeout redis_$i 180000" >>$CONF_FILE1
@@ -45,7 +49,11 @@ echo "pidfile \"$PID_FILE2\"" >>$CONF_FILE2
 
 for i in `seq 1 $NUM`; do
     REDIS_PORT=`echo $(($i+6379))`
-	echo "sentinel monitor redis_$i $HOST $REDIS_PORT 2" >>$CONF_FILE2
+	if [ $IS_SLAVE ]; then
+		echo "sentinel monitor redis_$i $MASTER $REDIS_PORT 3" >>$CONF_FILE2
+	else
+		echo "sentinel monitor redis_$i $HOST $REDIS_PORT 3" >>$CONF_FILE2
+	fi
 	echo "sentinel down-after-milliseconds redis_$i 10000" >>$CONF_FILE2
 	echo "sentinel parallel-syncs redis_$i 1" >>$CONF_FILE2
 	echo "sentinel failover-timeout redis_$i 180000" >>$CONF_FILE2

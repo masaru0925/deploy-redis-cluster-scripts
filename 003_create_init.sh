@@ -2,7 +2,7 @@
 
 INIT_DEST_DIR=/etc/init.d
 CONF_DEST_DIR=/etc/redis/conf
-INIT_TMP_DIR=./init
+INIT_TMP_DIR=/tmp/init
 PID_DIR=/var/local/run/redis
 ORG_DIR=/usr/local/redis
 USER=redis
