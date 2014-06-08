@@ -21,7 +21,7 @@ do
   esac
 done
 
-if [ $HOST eq 'localhost' ]; then
+if [ 'localhost' = $HOST ]; then
 	usage_exit;
 fi
 export IS_SLAVE;
