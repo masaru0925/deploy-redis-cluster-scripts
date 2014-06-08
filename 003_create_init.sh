@@ -4,7 +4,7 @@ INIT_DEST_DIR=/etc/init.d
 CONF_DEST_DIR=/etc/redis/conf
 INIT_TMP_DIR=/tmp/init
 PID_DIR=/var/local/run/redis
-ORG_DIR=/usr/local/redis
+ORG_DIR=/usr/local/redis/utils
 USER=redis
 
 rm -rf $INIT_TMP_DIR
@@ -16,7 +16,7 @@ do
     #PORT=`echo $i+6379|bc`
     PORT=$(($i+6379))
     #create a new config file for each instance
-    cp  $ORG_DIR/utils/redis_init_script $INIT_TMP_DIR/redis$i
+    cp  $ORG_DIR/redis_init_script $INIT_TMP_DIR/redis$i
     # this is just a search and replace instruction
     perl -p -i -e 's|# processname: redis|# processname: redis\n. /etc/rc.d/init.d/functions\n|g' $INIT_TMP_DIR/redis$i
     perl -p -i -e 's|REDISPORT=6379|REDISPORT='$PORT'|g' $INIT_TMP_DIR/redis$i
@@ -25,6 +25,7 @@ do
 
     perl -p -i -e 's|PIDFILE=.*$|PIDFILE="'$PID_DIR'/redis'$i'.pid"|g' $INIT_TMP_DIR/redis$i
     perl -p -i -e 's|CONF=.*$|CONF="'$CONF_DEST_DIR'/redis'$i'.conf"|g' $INIT_TMP_DIR/redis$i
+    perl -p -i -e 's|echo "Redis stopped"|echo "Redis stopped. Deleting PID file.."\n\trm -rf \$PIDFILE|g' $INIT_TMP_DIR/redis$i
     chmod 750 $INIT_TMP_DIR/redis$i
 	cp $INIT_TMP_DIR/redis$i $INIT_DEST_DIR/.
 done
