@@ -2,7 +2,7 @@
 CONF_DEST_P_DIR=/etc/nutcracker
 CONF_DEST_DIR=$CONF_DEST_P_DIR/conf
 INIT_DEST_DIR=/etc/init.d
-CONF_FILE=/tmp/nutcracker_rediscluster.yml 
+CONF_FILE=./nutcracker_rediscluster.yml 
 rm -rf $CONF_DEST_DIR
 mkdir -p $CONF_DEST_DIR
 
