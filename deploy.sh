@@ -3,7 +3,7 @@
 CMDNAME=`basename $0`
 
 usage_exit(){
-	echo "Usage: $CMDNAME [-h hostname or ip address] [-n number of redis process] [-s masterserver if slave] ]" 1>&2
+	echo "Usage: $CMDNAME [-h hostname or ip address *NOT localhost*] [-n number of redis process] [-s masterserver if slave] ]" 1>&2
 	exit 1
 }
 	
@@ -20,6 +20,10 @@ do
           ;;
   esac
 done
+
+if [ $HOST eq 'localhost' ]; then
+	usage_exit;
+fi
 export IS_SLAVE;
 export HOST;
 export NUM;
